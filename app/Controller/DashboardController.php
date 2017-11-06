@@ -6,12 +6,12 @@ class DashboardController extends AppController{
 
 public function beforeFilter(){
   $this->response->disableCache();
-  if($this->Session->read('login_id') == ''){
-    $this->redirect(array(
-      'controller'=>'users',
-      'action'=>'login'
-    ));
-  }
+  // if($this->Session->read('login_id') == ''){
+  //   $this->redirect(array(
+  //     'controller'=>'users',
+  //     'action'=>'login'
+  //   ));
+  // }
 }
 
   public function index(){
@@ -222,6 +222,12 @@ public function salarieprocess(){
                  if(isset($id) && $id!=''){
                     $salary['Salary']['processed_by_accounts']='Y';
                     $salary['Salary']['id']=$id;
+                    $execPath = $_SERVER['SERVER_NAME']."/salary/Dashboard/salaryslip/".$id;
+                    $note_name = $year.$month.$id.'.pdf';
+                    $note_path = WWW_ROOT.DS.'printpdf/'.$note_name;
+                    $html2Pdfcmd = "xvfb-run -a wkhtmltopdf $execPath $note_path";
+                    shell_exec($html2Pdfcmd);
+
                  }else{
                    unset($salary['Salary']['id']);
                  }
@@ -287,6 +293,12 @@ public function salarieprocess(){
        if(isset($id) && $id!=''){
           $salary['Salary']['processed_by_accounts']='Y';
           $salary['Salary']['id']=$id;
+          $execPath = $_SERVER['SERVER_NAME']."/salary/Dashboard/salaryslip/".$id;
+          //$note_name = 'pdf_note_'.rand().'_'.time().'.pdf';
+          $note_name = $year.$month.$id.'.pdf';
+          $note_path = WWW_ROOT.DS.'printpdf/'.$note_name;
+          $html2Pdfcmd = "xvfb-run -a wkhtmltopdf $execPath $note_path";
+          shell_exec($html2Pdfcmd);
        }else{
          unset($salary['Salary']['id']);
        }
@@ -428,6 +440,20 @@ public function indexAjax(){
     
   ));
     $this->set(compact('data'));
+  }
+///////////////////////download pdf////////////
+  public function pdfDownload($id=''){
+      $this->autorender=false;
+      
+      $execPath = $_SERVER['SERVER_NAME']."/salary/Dashboard/salaryslip/".$id;
+      $note_name = 'pdf_note_'.rand().'_'.time().'.pdf';
+      //move_uploaded_file($file['tmp_name'],WWW_ROOT.DS.'printpdf/'.$note_name);
+      //$data->read(WWW_ROOT.DS.'challanfiles/'.$file['name']);
+      //$note_path = __DIR__.'/../../files/pdfDownload/'.$note_name;
+      // echo  WWW_ROOT.'printpdf/'.$note_name;exit;
+      $note_path = WWW_ROOT.DS.'printpdf/'.$note_name;
+      $html2Pdfcmd = "xvfb-run -a wkhtmltopdf $execPath $note_path";
+      shell_exec($html2Pdfcmd);
   }
 //////////////////////////////////////////////
 public function loadempsdata($id){

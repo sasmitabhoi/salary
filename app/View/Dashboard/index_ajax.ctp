@@ -125,6 +125,7 @@ echo $this->Paginator->counter(array(
             <td>
                 <?php if(isset($val['SalaryDetail']['processed_by_accounts']) && $val['SalaryDetail']['processed_by_accounts']=='Y'){
                         echo $this->Html->link('PrintDetail', array('controller' => 'Dashboard','action'=>'salaryslip',$val['SalaryDetail']['id']),array('target' => '_blank','class'=>'btn btn-success'));
+                        echo $this->Html->link('PrintPDF', '/printpdf/'.$year.$month.$val['SalaryDetail']['id'].'.pdf',array('target' => '_blank','class'=>'btn btn-success'));
                         /*echo $this->Form->create('PrintDetail',array('url'=>'/Dashboard/salaryslip','admin'=>false));
                         echo $this->Form->input('id',array('type'=>'hidden','value'=> $val['SalaryDetail']['id']));
                         echo $this->Form->input('year',array('type'=>'hidden','value'=> $year));
