@@ -50,21 +50,21 @@
                                 <fieldset>
                                   <legend>Gross</legend>
                                         <div class="form-group">
-                                            <label class="control-label">Employee Name</label>
+                                            <label class="control-label">Employee Name<span  style="color:red;">*</span></label>
                                             <?php echo $this->Form->input('emp_name',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required'));
                                             ?> 
                                             <!-- <input class="form-control"> -->
                                             <!-- <p class="help-block">Example block-level help text here.</p> -->
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label">Working Days</label>
-                                            <?php echo $this->Form->input('no_of_days',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required'));
+                                            <label class="control-label">Working Days<span  style="color:red;">*</span></label>
+                                            <?php echo $this->Form->input('no_of_days',array('type' =>'text','class'=>'form-control numeric','div'=>false,'label'=>false,'required'=>'required'));
                                             ?> 
                                             <!-- <input class="form-control"> -->
                                             <!-- <p class="help-block">Example block-level help text here.</p> -->
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label">Basic</label>
+                                            <label class="control-label">Basic<span  style="color:red;">*</span></label>
                                             <?php echo $this->Form->input('emp_basic',array('type' =>'text','class'=>'form-control numeric','div'=>false,'label'=>false,'required'=>'required','onkeyup'=>"getgross_sal()"));
                                             ?> 
                                             <!-- <input class="form-control"> -->
@@ -72,51 +72,51 @@
                                         </div>
                                    <div class="form-group col-md-4">
                                       <label class="control-label">% of basic</label>
-                                      <?php echo $this->Form->input('basic_percentage',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required','onkeyup'=>"gethra(this.value)"));
+                                      <?php echo $this->Form->input('basic_percentage',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'onkeyup'=>"gethra(this.value)"));
                                       ?> 
                                   </div>
                                   <div class="form-group col-md-8">
                                       <label class="control-label">HRA</label>
-                                      <?php echo $this->Form->input('emp_hra',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required'));
+                                      <?php echo $this->Form->input('emp_hra',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'readonly'));
                                       ?> 
                                   </div>
                                   <div class="form-group">
                                       <label class="control-label">Conveyance  Allowance</label>
-                                      <?php echo $this->Form->input('emp_con_all',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required','onkeyup'=>"getgross_sal()"));
+                                      <?php echo $this->Form->input('emp_con_all',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'onkeyup'=>"getgross_sal()"));
                                       ?> 
                                       <!-- <input class="form-control"> -->
                                       <!-- <p class="help-block">Example block-level help text here.</p> -->
                                   </div>
                                         <div class="form-group">
                                             <label class="control-label">Communication Allowance</label>
-                                            <?php echo $this->Form->input('emp_comm_all',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required','onkeyup'=>"getgross_sal()"));
+                                            <?php echo $this->Form->input('emp_comm_all',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'onkeyup'=>"getgross_sal()"));
                                             ?> 
                                             <!-- <input class="form-control"> -->
                                             <!-- <p class="help-block">Example block-level help text here.</p> -->
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label">Special Allownce</label>
-                                            <?php echo $this->Form->input('emp_spl_all',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required','onkeyup'=>"getgross_sal()"));
+                                            <label class="control-label">Special Allowance</label>
+                                            <?php echo $this->Form->input('emp_spl_all',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'onkeyup'=>"getgross_sal()"));
                                             ?> 
                                             <!-- <input class="form-control"> -->
                                             <!-- <p class="help-block">Example block-level help text here.</p> -->
                                         </div>
                                   </fieldset>
                                   <div class="form-group">
-                                      <label class="control-label">GROSS Salary</label>
-                                      <?php echo $this->Form->input('emp_gross_sal',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required','placeholder'=>'Basic+HRA+Conveyance+Communication+Special'));
+                                      <label class="control-label">GROSS Salary<span  style="color:red;">*</span></label>
+                                      <?php echo $this->Form->input('emp_gross_sal',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required','placeholder'=>'Basic+HRA+Conveyance+Communication+Special','readonly'));
                                       ?> 
                                       <!-- <input class="form-control"> -->
                                       <!-- <p class="help-block">Example block-level help text here.</p> -->
                                   </div>
                                   <div class="form-group col-md-4">
                                       <label class="control-label">% of Gross</label>
-                                      <?php echo $this->Form->input('gross_percentage',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required','onkeyup'=>"getcommit_all(this.value)"));
+                                      <?php echo $this->Form->input('gross_percentage',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'onkeyup'=>"getcommit_all(this.value)"));
                                       ?> 
                                   </div>
                                   <div class="form-group col-md-8">
                                       <label class="control-label">Commitment allowance</label>
-                                      <?php echo $this->Form->input('emp_commit_all',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required'));
+                                      <?php echo $this->Form->input('emp_commit_all',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'readonly'));
                                       ?> 
                                       <!-- <input class="form-control"> -->
                                       <!-- <p class="help-block">Example block-level help text here.</p> -->
@@ -127,31 +127,31 @@
                                   <legend>CTC</legend>
                                   <div class="form-group col-md-4">
                                       <label class="control-label">% of Basic</label>
-                                      <?php echo $this->Form->input('empr_percentage_pf',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required','onkeyup'=>"getempr_pf(this.value)"));
+                                      <?php echo $this->Form->input('empr_percentage_pf',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'onkeyup'=>"getempr_pf(this.value)"));
                                       ?> 
                                   </div>                                  
                                   <div class="form-group col-md-8">
                                       <label class="control-label">Employer PF</label>
-                                      <?php echo $this->Form->input('empr_pf',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required'));
+                                      <?php echo $this->Form->input('empr_pf',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false));
                                       ?> 
                                       <!-- <input class="form-control"> -->
                                       <!-- <p class="help-block">Example block-level help text here.</p> -->
                                   </div>
                                   <div class="form-group col-md-4">
                                       <label class="control-label">% of Gross</label>
-                                      <?php echo $this->Form->input('empr_percentage_gross',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required','onkeyup'=>"getempr_gross(this.value)"));
+                                      <?php echo $this->Form->input('empr_percentage_gross',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'onkeyup'=>"getempr_gross(this.value)"));
                                       ?> 
                                   </div>
                                   <div class="form-group col-md-8">
                                       <label class="control-label">ESI (Employer)</label>
-                                      <?php echo $this->Form->input('empr_esi',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required'));
+                                      <?php echo $this->Form->input('empr_esi',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false));
                                       ?> 
                                       <!-- <input class="form-control"> -->
                                       <!-- <p class="help-block">Example block-level help text here.</p> -->
                                   </div>
                                   <div class="form-group">
-                                      <label class="control-label">CTC</label>
-                                      <?php echo $this->Form->input('emp_ctc',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required','placeholder'=>'Gross+PF+ESIC'));
+                                      <label class="control-label">CTC<span  style="color:red;">*</span></label>
+                                      <?php echo $this->Form->input('emp_ctc',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required','placeholder'=>'Gross+PF+ESIC','readonly'));
                                       ?> 
                                       <!-- <input class="form-control"> -->
                                       <!-- <p class="help-block">Example block-level help text here.</p> -->
@@ -161,38 +161,38 @@
                                   <legend>Take Home</legend>
                                   <div class="form-group col-md-4">
                                       <label class="control-label">% of Basic</label>
-                                      <?php echo $this->Form->input('emp_percentage_pf',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required','onkeyup'=>"getemp_pf(this.value)"));
+                                      <?php echo $this->Form->input('emp_percentage_pf',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'onkeyup'=>"getemp_pf(this.value)"));
                                       ?> 
                                   </div>
                                   <div class="form-group col-md-8">
                                       <label class="control-label">Employee PF</label>
-                                      <?php echo $this->Form->input('emp_pf',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required'));
+                                      <?php echo $this->Form->input('emp_pf',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'readonly'));
                                       ?> 
                                       <!-- <input class="form-control"> -->
                                       <!-- <p class="help-block">Example block-level help text here.</p> -->
                                   </div>
                                   <div class="form-group col-md-4">
                                       <label class="control-label">% of Gross</label>
-                                      <?php echo $this->Form->input('emp_percentage_gross',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required','onkeyup'=>"getemp_gross(this.value)"));
+                                      <?php echo $this->Form->input('emp_percentage_gross',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'onkeyup'=>"getemp_gross(this.value)"));
                                       ?> 
                                   </div>
                                   <div class="form-group col-md-8">
                                       <label class="control-label">ESIC (Employee)</label>
-                                      <?php echo $this->Form->input('emp_esi',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required'));
+                                      <?php echo $this->Form->input('emp_esi',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'readonly'));
                                       ?> 
                                       <!-- <input class="form-control"> -->
                                       <!-- <p class="help-block">Example block-level help text here.</p> -->
                                   </div>
                                   <div class="form-group">
                                       <label class="control-label">Proffessional Tax (PT)</label>
-                                      <?php echo $this->Form->input('emp_prof_tax',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required','onkeyup'=>"takehome()"));
+                                      <?php echo $this->Form->input('emp_prof_tax',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'onkeyup'=>"takehome()"));
                                       ?> 
                                       <!-- <input class="form-control"> -->
                                       <!-- <p class="help-block">Example block-level help text here.</p> -->
                                   </div>
                                   <div class="form-group">
                                       <label class="control-label">Income Tax (IT)</label>
-                                      <?php echo $this->Form->input('emp_inc_tax',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required','onkeyup'=>"takehome()"));
+                                      <?php echo $this->Form->input('emp_inc_tax',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'onkeyup'=>"takehome()"));
                                       ?> 
                                       <!-- <input class="form-control"> -->
                                       <!-- <p class="help-block">Example block-level help text here.</p> -->
@@ -206,8 +206,8 @@
                                   </div>
                                 </fieldset>
                                 <div class="form-group">
-                                      <label class="control-label">Take Home</label>
-                                      <?php echo $this->Form->input('emp_takehome',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required','placeholder' =>'Gross-employeePF-ESIC-PT-IT-Advance'));
+                                      <label class="control-label">Take Home<span  style="color:red;">*</span></label>
+                                      <?php echo $this->Form->input('emp_takehome',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'placeholder' =>'Gross-employeePF-ESIC-PT-IT-Advance','readonly'));
                                       ?> 
                                       <!-- <input class="form-control"> -->
                                       <!-- <p class="help-block">Example block-level help text here.</p> -->

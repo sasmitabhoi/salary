@@ -105,13 +105,17 @@ public function salariesbreakup(){
 
   if($this->request->is(array('put','post'))){
       //debug($this->data);exit;
-
-      if ($this->Salary->save($this->request->data)) {
-        $this->Flash->success(__('Master salary Saved.'));
-        //return $this->redirect(array('action' => 'index'));
-      } else {
-        $this->Flash->error(__('Master salary not saved. Please, try again.'));
+      if(isset($this->data['Salary']['emp_id']) && $this->data['Salary']['emp_id']!=''){
+          if ($this->Salary->save($this->request->data)) {
+            $this->Flash->success(__('Master salary Saved.'));
+            //return $this->redirect(array('action' => 'index'));
+          } else {
+            $this->Flash->error(__('Master salary not saved. Please, try again.'));
+          }
+      }else{
+        $this->Flash->error(__('Please enter a valid employee.'));
       }
+      
       
   }
 

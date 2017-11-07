@@ -58,11 +58,11 @@ function getIndianCurrency($number)
   <!-- <script type="text/javascript" src="js/simpleZoom.js"></script> -->
 <style>
 .table {border:2px solid #000;}
-.table>tbody>tr>td {border-top:none; font-size: 11px;padding:5px;}  
-.table>tbody>tr>th {border-bottom:1px solid #000; font-size: 11px;padding:5px;} 
+.table>tbody>tr>td {border-top:none; font-size: 12px;padding:5px;}  
+.table>tbody>tr>th {border-bottom:1px solid #000; font-size: 12px;padding:5px;} 
 .table>tbody>tr>td.dot{border-left:1px dashed #000;}
 .table>tbody>tr>th>h4{font-weight:bold; padding-top:15px;}
-.container{width: 700px;} 
+.container{width: 850px;} 
 </style>
 </head>
 <body onload="window.print();">
