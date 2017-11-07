@@ -105,6 +105,7 @@ public function salariesbreakup(){
 
   if($this->request->is(array('put','post'))){
       //debug($this->data);exit;
+
       if ($this->Salary->save($this->request->data)) {
         $this->Flash->success(__('Master salary Saved.'));
         //return $this->redirect(array('action' => 'index'));

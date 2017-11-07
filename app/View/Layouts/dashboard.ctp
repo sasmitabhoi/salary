@@ -30,9 +30,9 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->Html->meta('icon');
 
 		//echo $this->Html->css('cake.generic');
-		echo $this->Html->css(array('assets/font-awesome/css/font-awesome.css','assets/plugins/pace/pace-theme-big-counter.css','assets/css/style.css','assets/css/main-style.css','assets/plugins/bootstrap/bootstrap.css','assets/plugins/morris/morris-0.4.3.min.css'));
+		echo $this->Html->css(array('assets/font-awesome/css/font-awesome.css','assets/plugins/pace/pace-theme-big-counter.css','assets/css/style.css','assets/css/main-style.css','assets/plugins/bootstrap/bootstrap.css','assets/plugins/morris/morris-0.4.3.min.css','font-awesome.min.css','bootstrap.min.css'));
 
-		echo $this->Html->script(array('jquery-1.10.2.js','jquery.metisMenu.js','bootstrap.min.js','pace.js','siminta.js','raphael-2.1.0.min.js','morris.js','dashboard-demo.js'));
+		echo $this->Html->script(array('jquery-1.10.2.js','jquery.metisMenu.js','bootstrap.min.js','pace.js','siminta.js','raphael-2.1.0.min.js','morris.js','dashboard-demo.js','jquery.min.js'));
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		
