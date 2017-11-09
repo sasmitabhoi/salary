@@ -57,6 +57,8 @@ echo $this->Paginator->counter(array(
             <th>Take Home</th>
             <th>Year</th>
             <th>Month</th>
+            <th>Days Paid</th>
+            <th>Leaves Availed</th>
             <th>Action By HR</th>
             <th>Action By Accounts</th>
             <th>Print Details</th>
@@ -96,15 +98,35 @@ echo $this->Paginator->counter(array(
             <td><?php echo h($val['Salary']['emp_takehome'])?></td> 
             <td><?php echo h($val['SalaryDetail']['year'])?></td> 
             <td><?php echo h($val['SalaryDetail']['month'])?></td> 
+            <td>
+                <?php 
+                if(isset($val['SalaryDetail']['days_paid']) && $val['SalaryDetail']['days_paid']!=''){
+                    echo $val['SalaryDetail']['days_paid'];
+                }else{
+                    echo $this->Form->input("SalaryDetail.".$rowCnt.".days_paid",array('type' =>'text','class'=>'form-control numeric days_paid_'.$val['Salary']['emp_id'],'div'=>false,'label'=>false,'required'=>'required'));
+                }
+            ?> 
+            </td> 
+            <td>
+            <?php 
+            if(isset($val['SalaryDetail']['leaves_availed']) && $val['SalaryDetail']['leaves_availed']!=''){
+                    echo $val['SalaryDetail']['leaves_availed'];
+                }else{
+                    echo $this->Form->input("SalaryDetail.".$rowCnt.".leaves_availed",array('type' =>'text','class'=>'form-control numeric leaves_availed_'.$val['Salary']['emp_id'],'div'=>false,'label'=>false,'required'=>'required'));
+                }
+            ?> 
+            </td> 
             <td><?php 
             if(isset($val['SalaryDetail']['processed_by_hr']) && $val['SalaryDetail']['processed_by_hr']=='Y'){
                 echo 'Salary Processed by Hr';
             }else{
-                echo $this->Form->create('SalaryProcess',array('url'=>'/Dashboard/salarieprocess','admin'=>false));
+                echo $this->Form->button('Process', array('type' => 'button','class'=>'btn btn-primary process-button','onclick' => "processsalary(".$val['Salary']['emp_id'].",$month,$year)"));
+                /*$this->Form->button(array('label'=>'Process','class'=>'btn btn-primary process-button','div'=>false,'onclick'=>'processsalary($val["Salary"]["emp_id"])'));*/
+                /*echo $this->Form->create('SalaryProcess',array('url'=>'/Dashboard/salarieprocess','admin'=>false));
                 echo $this->Form->input('emp_id',array('type'=>'hidden','value'=> $val['Salary']['emp_id']));
                 echo $this->Form->input('year',array('type'=>'hidden','value'=> $year));
                 echo $this->Form->input('month',array('type'=>'hidden','value'=> $month));
-                echo $this->Form->end(array('label'=>'Process','class'=>'btn btn-primary process-button','div'=>false,'onclick'=>'return confirm("Are you sure want to process this salary?")'));
+                echo $this->Form->end(array('label'=>'Process','class'=>'btn btn-primary process-button','div'=>false,'onclick'=>'return confirm("Are you sure want to process this salary?")'));*/
                 }?>
             </td> 
             <td>
@@ -113,12 +135,13 @@ echo $this->Paginator->counter(array(
                         echo 'Salary released by accounts';
                     }else{
                         if($this->Session->read('login_id') == 'accountadmin'){
-                        echo $this->Form->create('SalaryRelease',array('url'=>'/Dashboard/salarieprocess','admin'=>false));
+                        echo $this->Form->button('Release Salary', array('type' => 'button','class'=>'btn btn-primary release-button','onclick' => "releasesalary(".$val['Salary']['emp_id'].",".$val['SalaryDetail']['id'].",$month,$year)"));
+                        /*echo $this->Form->create('SalaryRelease',array('url'=>'/Dashboard/salarieprocess','admin'=>false));
                         echo $this->Form->input('emp_id',array('type'=>'hidden','value'=> $val['Salary']['emp_id']));
                         echo $this->Form->input('id',array('type'=>'hidden','value'=> $val['SalaryDetail']['id']));
                         echo $this->Form->input('year',array('type'=>'hidden','value'=> $year));
                         echo $this->Form->input('month',array('type'=>'hidden','value'=> $month));
-                        echo $this->Form->end(array('label'=>'Release Salary','class'=>'btn btn-primary release-button','div'=>false,'onclick'=>'return confirm("Are you sure want to release this salary?")'));
+                        echo $this->Form->end(array('label'=>'Release Salary','class'=>'btn btn-primary release-button','div'=>false,'onclick'=>'return confirm("Are you sure want to release this salary?")'));*/
                 }}?>              
             
             </td>	
@@ -154,6 +177,43 @@ echo $this->Paginator->counter(array(
             ?>
 <?php
 }
+?>
+
+<?php
+$ajaxUrl   = $this->Html->url(array('controller'=>'Dashboard','action'=>'process_sal'));
+echo $this->Html->scriptBlock("
+    
+   
+    function getemplist2(val){
+      var year=$('#SalaryDetailYear').val();
+      var month=$('#SalaryDetailMonth').val();
+      if(year=='' && month ==''){
+        alert('Please select a year');
+      }else{
+        var url = '".$ajaxUrl."';
+        $.post(url, {year:year,month:month,desg:val}, function(res) {
+            if (res) {
+                $('#listingDiv').html(res);
+            }
+        }); 
+      }
+           
+    }
+    function getemplist1(val){
+      var month=$('#SalaryDetailMonth').val();
+      if(month==''){
+        alert('Please select a month');
+      }else{
+        var url = '".$ajaxUrl."';
+        $.post(url, {year:val,month:month}, function(res) {
+            if (res) {
+                $('#listingDiv').html(res);
+            }
+        }); 
+      }
+           
+    }
+",array('inline'=>false));
 ?>
 <script type="text/javascript">
   $('#selectAll').click(function (e) {

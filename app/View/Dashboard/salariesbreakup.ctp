@@ -214,7 +214,7 @@
                                   </div>
                                 </div>
                                 
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary" onclick='return confirm("Are you sure want to set this salary?")'>Submit</button>
                                 <button type="reset" class="btn btn-success">Reset</button>
                                 </fieldset>
                                 </div>

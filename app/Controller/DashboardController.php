@@ -200,17 +200,17 @@ public function salarieprocess(){
        // debug($this->data);exit;
        //if(isset($this->data['SalaryDetail']['checkbox']) && $this->data['SalaryDetail']['checkbox'] >0){
       if(isset($this->data['checkbox']) && is_array($this->data['checkbox']) && !empty($this->data['checkbox'])){
-        if(isset($this->data['year']) && $this->data['year']!=''){
-              $year=$this->data['year'];
+        if(isset($this->data['SalaryDetail']['year']) && $this->data['SalaryDetail']['year']!=''){
+              $year=$this->data['SalaryDetail']['year'];
             }
-            if(isset($this->data['month']) && $this->data['month']!=''){
-              $month=$this->data['month'];
+            if(isset($this->data['SalaryDetail']['month']) && $this->data['SalaryDetail']['month']!=''){
+              $month=$this->data['SalaryDetail']['month'];
             }
             //debug($this->data);exit;
             $success=0;
             $fail=0;
             $count=0;
-            foreach($this->data['checkbox'] as $val){
+            foreach($this->data['checkbox'] as $key=>$val){
               $count++;
               if(isset($val['emp_id']) && $val['emp_id'] > 0){
                   $salary=$this->Salary->find('first',array(
@@ -227,6 +227,8 @@ public function salarieprocess(){
                  if(isset($id) && $id!=''){
                     $salary['Salary']['processed_by_accounts']='Y';
                     $salary['Salary']['id']=$id;
+                    unset($salary['Salary']['days_paid']);
+                    unset($salary['Salary']['leaves_availed']);
                     $execPath = $_SERVER['SERVER_NAME']."/salary/Dashboard/salaryslip/".$id;
                     $note_name = $year.$month.$id.'.pdf';
                     $note_path = WWW_ROOT.DS.'printpdf/'.$note_name;
@@ -234,6 +236,8 @@ public function salarieprocess(){
                     shell_exec($html2Pdfcmd);
 
                  }else{
+                   $salary['Salary']['days_paid']=$this->data['SalaryDetail'][$key]['days_paid'];
+                   $salary['Salary']['leaves_availed']=$this->data['SalaryDetail'][$key]['leaves_availed'];
                    unset($salary['Salary']['id']);
                  }
                  //debug($salary);
@@ -340,9 +344,60 @@ public function salarieprocess(){
 
   $this->set(compact('years','months','designations'));
 }
-////////////salary release//////////////////
-public function salarierelease(){
+////////////salary process//////////////////
+public function process_sal(){
   $this->loadModel('SalaryDetail');
+  $this->loadModel('Salary');
+  $salary=$this->Salary->find('first',array(
+          'conditions'=>array(
+            'Salary.emp_id'=>$this->data['emp_id'],
+          ),
+        ));
+       $salary['Salary']['year']=$this->data['year'];
+       $salary['Salary']['month']=$this->data['month'];
+       $salary['Salary']['days_paid']=$this->data['days_paid'];
+       $salary['Salary']['leaves_availed']=$this->data['leaves_availed'];
+       $salary['Salary']['processed_by_hr']='Y';
+       if(isset($id) && $id!=''){
+          $salary['Salary']['processed_by_accounts']='Y';
+          $salary['Salary']['id']=$id;
+          $execPath = $_SERVER['SERVER_NAME']."/salary/Dashboard/salaryslip/".$id;
+          //$note_name = 'pdf_note_'.rand().'_'.time().'.pdf';
+          $note_name = $year.$month.$id.'.pdf';
+          $note_path = WWW_ROOT.DS.'printpdf/'.$note_name;
+          $html2Pdfcmd = "xvfb-run -a wkhtmltopdf $execPath $note_path";
+          shell_exec($html2Pdfcmd);
+       }else{
+         unset($salary['Salary']['id']);
+       }
+       //debug($salary['Salary']);exit;
+       
+      if ($this->SalaryDetail->saveAll($salary['Salary'])) {
+        echo 'SUCCESS';exit;
+      } else {
+        echo 'FAILED';exit;
+      }
+}
+////////////////////////Release Salary///////////
+public function release_sal(){
+  $this->loadModel('SalaryDetail');
+       if(isset($this->data['id']) && $this->data['id']!=''){
+          $this->request->data['SalaryDetail']['id']=$this->data['id'];
+          $this->request->data['SalaryDetail']['processed_by_accounts']="'Y'";
+          $execPath = $_SERVER['SERVER_NAME']."/salary/Dashboard/salaryslip/".$this->data['id'];
+          //$note_name = 'pdf_note_'.rand().'_'.time().'.pdf';
+          $note_name = $this->data['year'].$this->data['month'].$this->data['id'].'.pdf';
+          $note_path = WWW_ROOT.DS.'printpdf/'.$note_name;
+          $html2Pdfcmd = "xvfb-run -a wkhtmltopdf $execPath $note_path";
+          shell_exec($html2Pdfcmd);
+       }
+       // debug($this->request->data);exit;
+       
+      if ($this->SalaryDetail->updateAll(array("SalaryDetail.processed_by_accounts"=>"'Y'"),array("SalaryDetail.id"=>$this->data['id']))) {
+        echo 'SUCCESS';exit;
+      } else {
+        echo 'FAILED';exit;
+      }
 }
 /////////////ajax salary process/////////////
 public function indexAjax(){
@@ -404,7 +459,7 @@ public function indexAjax(){
     ),*/
 
       'conditions'  => $condition,
-      'fields' => array('Salary.*','SalaryDetail.id','SalaryDetail.month','SalaryDetail.year','SalaryDetail.processed_by_hr','SalaryDetail.processed_by_accounts'),
+      'fields' => array('Salary.*','SalaryDetail.id','SalaryDetail.month','SalaryDetail.days_paid','SalaryDetail.leaves_availed','SalaryDetail.year','SalaryDetail.processed_by_hr','SalaryDetail.processed_by_accounts'),
       'limit'     => 20,
     );
     //debug($this->paginate);

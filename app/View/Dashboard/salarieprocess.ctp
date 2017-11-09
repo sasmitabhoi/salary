@@ -56,7 +56,32 @@
             </div>
 <?php
 $ajaxUrl   = $this->Html->url(array('controller'=>'Dashboard','action'=>'indexAjax'));
+$ajaxProcess   = $this->Html->url(array('controller'=>'Dashboard','action'=>'process_sal'));
+$ajaxRelease   = $this->Html->url(array('controller'=>'Dashboard','action'=>'release_sal'));
 echo $this->Html->scriptBlock("
+
+    function processsalary(emp_id,month,year){
+      var days_paid=$('.days_paid_'+emp_id).val();
+      var leaves_availed=$('.leaves_availed_'+emp_id).val();
+        var url = '".$ajaxProcess."';
+        $.post(url, {year:year,month:month,emp_id:emp_id,days_paid:days_paid,leaves_availed:leaves_availed}, function(res) {
+            if (res == 'SUCCESS') {
+               getemplist(month);
+            }
+        }); 
+      
+           
+    }
+    function releasesalary(emp_id,id,month,year){
+        var url = '".$ajaxRelease."';
+        $.post(url, {emp_id:emp_id,id:id,year:year,month:month}, function(res) {
+            if (res == 'SUCCESS') {
+               getemplist(month);
+            }
+        }); 
+      
+           
+    }
     
     function getemplist(val){
       var year=$('#SalaryDetailYear').val();
@@ -103,6 +128,7 @@ echo $this->Html->scriptBlock("
       }
            
     }
+
 ",array('inline'=>false));
 ?>
 

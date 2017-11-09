@@ -1,5 +1,15 @@
+<style type="text/css">
+      .inputError, .inputError:focus{
+        border:solid 1px #a94442;
+        box-shadow:0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 6px #ce8483;
+      }
+      .inputSuccess, .inputSuccess:focus{
+        border:solid 1px #3c763d;
+        box-shadow:0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 6px #67b168;
+      }
+</style>
 <?php //debug($data);exit;?>
-<?php echo $this->Form->create('Salary');?>
+<?php echo $this->Form->create('Salary',array('onsubmit'=>'return validateFrm();'));?>
 <?php echo $this->Form->input('emp_id',array('type'=>'hidden','class'=> 'tbox','label'=>false,'div'=>false,'value'=>isset($data['Employee']['id'])?$data['Employee']['id']:$data['Salary']['emp_id'])); ?> 
 <?php echo $this->Form->input('id',array('type'=>'hidden','class'=> 'tbox','label'=>false,'div'=>false,'value'=>isset($data['Salary']['id'])?$data['Salary']['id']:'')); ?>
 <fieldset>
@@ -9,21 +19,21 @@
   <legend>Gross</legend>
         <div class="form-group">
             <label class="control-label">Employee Name</label>
-            <?php echo $this->Form->input('emp_name',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required','value'=>isset($data['Employee']['name'])?$data['Employee']['name']:$data['Salary']['emp_name']));
+            <?php echo $this->Form->input('emp_name',array('type' =>'text','class'=>'form-control validate','div'=>false,'label'=>false,'required'=>'required','value'=>isset($data['Employee']['name'])?$data['Employee']['name']:$data['Salary']['emp_name']));
             ?> 
             <!-- <input class="form-control"> -->
             <!-- <p class="help-block">Example block-level help text here.</p> -->
         </div>
         <div class="form-group">
             <label class="control-label">Working Days</label>
-            <?php echo $this->Form->input('no_of_days',array('type' =>'text','class'=>'form-control numeric','div'=>false,'label'=>false,'required'=>'required','value'=>isset($data['Salary']['no_of_days'])?$data['Salary']['no_of_days']:''));
+            <?php echo $this->Form->input('no_of_days',array('type' =>'text','class'=>'form-control validate numeric','div'=>false,'label'=>false,'required'=>'required','value'=>isset($data['Salary']['no_of_days'])?$data['Salary']['no_of_days']:''));
             ?> 
             <!-- <input class="form-control"> -->
             <!-- <p class="help-block">Example block-level help text here.</p> -->
         </div>
         <div class="form-group">
             <label class="control-label">Basic<span  style="color:red;">*</span></label>
-            <?php echo $this->Form->input('emp_basic',array('type' =>'text','class'=>'form-control numeric','div'=>false,'label'=>false,'required'=>'required','onkeyup'=>"getgross_sal()",'value'=>isset($data['Salary']['emp_basic'])?$data['Salary']['emp_basic']:''));
+            <?php echo $this->Form->input('emp_basic',array('type' =>'text','class'=>'form-control validate numeric','div'=>false,'label'=>false,'required'=>'required','onkeyup'=>"getgross_sal()",'value'=>isset($data['Salary']['emp_basic'])?$data['Salary']['emp_basic']:''));
             ?> 
             <!-- <input class="form-control"> -->
             <!-- <p class="help-block">Example block-level help text here.</p> -->
@@ -172,6 +182,6 @@
   </div>
 </div>
 
-<button type="submit" class="btn btn-primary">Submit</button>
+<button type="submit" class="btn btn-primary" onclick='return confirm("Are you sure want to set this salary?")'>Submit</button>
 <button type="reset" class="btn btn-success">Reset</button>
 </fieldset>
