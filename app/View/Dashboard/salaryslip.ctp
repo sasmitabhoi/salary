@@ -1,8 +1,12 @@
 <?php //debug($data);
+if(isset($data) && is_array($data) && count($data)>0){
+
+
 $monthNum  = $data['SalaryDetail']['month'];
 $dateObj   = DateTime::createFromFormat('!m', $monthNum);
 $monthName = $dateObj->format('F');
-$total_deduction=$data['SalaryDetail']['emp_adv']+$data['SalaryDetail']['emp_prof_tax']+$data['SalaryDetail']['emp_pf']+$data['SalaryDetail']['emp_esi'];
+$leave_deduction=round($data['SalaryDetail']['emp_gross_sal']-(($data['SalaryDetail']['emp_gross_sal']/$data['SalaryDetail']['no_of_days'])*$data['SalaryDetail']['days_paid']),2);
+$total_deduction=$data['SalaryDetail']['emp_adv']+$data['SalaryDetail']['emp_prof_tax']+$data['SalaryDetail']['emp_pf']+$data['SalaryDetail']['emp_esi']+$leave_deduction;
   /**
   * Converting Currency Numbers to words currency format
    */
@@ -89,15 +93,15 @@ function getIndianCurrency($number)
   </tr>
   <tr>
     <td><b>DEPARTMENT</b></td>
-    <td><b>X</b></td>
+    <td><b><?php echo $dep_name;?></b></td>
     <td><b>DAYS PAID</b></td>
-    <td><b>0</b></td>
+    <td><b><?php echo $data['SalaryDetail']['days_paid'];?></b></td>
   </tr>
   <tr>
     <td><b>EMPLOYEE CODE<b></td>
     <td><b><?php echo $data['Employee']['employee_id'];?></b></td>
     <td><b>LEAVES AVAILED</b></td>
-    <td><b>0</b></td>
+    <td><b><?php echo $data['SalaryDetail']['leaves_availed'];?></b></td>
   </tr>
   <tr>
     <td><b>MONTHLY SALARY</b></td>
@@ -143,8 +147,8 @@ function getIndianCurrency($number)
   <tr>
     <td class="dot">SPECIAL ALLOWANCE</td>
     <td class="dot"><?php echo $data['SalaryDetail']['emp_spl_all'];?></td>
-    <td class="dot">&nbsp;</td>
-    <td class="dot">&nbsp;</td>
+    <td class="dot">LEAVE DEDUCTION</td>
+    <td class="dot"><?php echo $leave_deduction;?></td>
   </tr>
   <tr>
     <td class="dot">GROSS EARNINGS</td>
@@ -188,3 +192,6 @@ function getIndianCurrency($number)
 
 </body>
 </html>
+<?php }else{?>
+<span style="color: red;text-align: center;">No Data Found</span>
+<?php }?>

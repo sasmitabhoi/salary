@@ -37,7 +37,7 @@
                     <?php if($this->Session->read('login_id')=='accountadmin'){?>
                          <li>
                               <?php
-                                  echo $this->Html->link('Process Salary',array(
+                                  echo $this->Html->link('Release Salary',array(
                                     'action'=>'salarieprocess'
                                   ));
                                ?>
@@ -91,6 +91,18 @@
                             ));
                          ?>
                         <!--  <a href="tables.html"><i class="fa fa-table fa-fw"></i>Tables</a> -->
+                    </li>
+                    <li>
+                    <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>KPI Reports<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <?php echo $this->Html->link('Employee Compact Kpi Report',array('action'=>'kpicompactReport'));?>
+                            </li>
+                            <li>
+                                <?php echo $this->Html->link('Employee Overview Kpi Report',array('action'=>'kpiview'));?>
+                            </li>
+                        </ul>
+                        <!-- second-level-items -->
                     </li>
                     <li>
                     <?php

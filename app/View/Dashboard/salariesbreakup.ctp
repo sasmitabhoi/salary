@@ -1,3 +1,14 @@
+  <style type="text/css">
+      .inputError, .inputError:focus{
+        border:solid 1px #a94442;
+        box-shadow:0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 6px #ce8483;
+      }
+      .inputSuccess, .inputSuccess:focus{
+        border:solid 1px #3c763d;
+        box-shadow:0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 6px #67b168;
+      }
+  </style>
+
           <div class="row">
                  <!-- page header -->
                 <div class="col-lg-12">
@@ -15,22 +26,21 @@
                         <div class="panel-body">
                             <div class="row">
                             <div class="col-md-12">
-                            <?php echo $this->Form->create('Search');?>
                                 <fieldset>
                                   <legend>Get Employee Details</legend>
                                   <div class="form-group col-md-3">
                                       <label class="control-label">Select Category</label>
-                                      <?php echo $this->Form->input('category_id',array('label'=>false,'class'=>'form-control','options'=>$categories,'empty'=>'-- Select Category --','required'=>false,'onchange'=>'loadempsbycat(this.value)','style'=>'width:200px;'));
+                                      <?php echo $this->Form->input('category_id',array('label'=>false,'class'=>'form-control','options'=>$categories,'empty'=>'-- Select Category --','required'=>false,'onchange'=>'loadempsbycat(this.value)','style'=>'width:200px;','data-tabindex' => "1"));
                                       ?> 
                                   </div>
                                   <div class="form-group col-md-3">
                                       <label class="control-label">Select Designation</label>
-                                      <?php echo $this->Form->input('designation_id',array('label'=>false,'class'=>'form-control','options'=>$designations,'empty'=>'-- Select Designation --','required'=>false,'onchange'=>'loadempsbydes(this.value)','style'=>'width:200px;'));
+                                      <?php echo $this->Form->input('designation_id',array('label'=>false,'class'=>'form-control','options'=>$designations,'empty'=>'-- Select Designation --','required'=>false,'onchange'=>'loadempsbydes(this.value)','style'=>'width:200px;','data-tabindex' => "2"));
                                       ?> 
                                   </div>
                                   <div class="form-group col-md-3">
                                       <label class="control-label">Select Employee</label>
-                                      <?php echo $this->Form->input('employee_id',array('label'=>false,'class'=>'form-control','options'=>$employees,'empty'=>'-- Select Employee --','required'=>false,'style'=>'width:200px;','onchange'=>"loadempdata()"));
+                                      <?php echo $this->Form->input('employee_id',array('label'=>false,'class'=>'form-control','options'=>$employees,'empty'=>'-- Select Employee --','required'=>false,'style'=>'width:200px;','onchange'=>"loadempdata()",'data-tabindex' => "3"));
                                       ?> 
                                   </div>
                                   <!-- <div class="form-group col-md-3">
@@ -42,7 +52,7 @@
                               </fieldset>
                               </div>
                             <div class="employeedetail">
-                            <?php echo $this->Form->create('Salary');?>
+                            <?php echo $this->Form->create('Salary',array('onsubmit' =>"return validateFrm()" , ));?>
                             <?php echo $this->Form->input('emp_id',array('type'=>'hidden','class'=> 'tbox','label'=>false,'div'=>false)); ?> 
                                 <fieldset>
                                   <legend>Employee Details</legend>
@@ -51,21 +61,14 @@
                                   <legend>Gross</legend>
                                         <div class="form-group">
                                             <label class="control-label">Employee Name<span  style="color:red;">*</span></label>
-                                            <?php echo $this->Form->input('emp_name',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required'));
-                                            ?> 
-                                            <!-- <input class="form-control"> -->
-                                            <!-- <p class="help-block">Example block-level help text here.</p> -->
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label">Working Days<span  style="color:red;">*</span></label>
-                                            <?php echo $this->Form->input('no_of_days',array('type' =>'text','class'=>'form-control numeric','div'=>false,'label'=>false,'required'=>'required'));
+                                            <?php echo $this->Form->input('emp_name',array('type' =>'text','class'=>'form-control validate','div'=>false,'label'=>false));
                                             ?> 
                                             <!-- <input class="form-control"> -->
                                             <!-- <p class="help-block">Example block-level help text here.</p> -->
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">Basic<span  style="color:red;">*</span></label>
-                                            <?php echo $this->Form->input('emp_basic',array('type' =>'text','class'=>'form-control numeric','div'=>false,'label'=>false,'required'=>'required','onkeyup'=>"getgross_sal()"));
+                                            <?php echo $this->Form->input('emp_basic',array('type' =>'text','class'=>'form-control numeric validate','div'=>false,'label'=>false,'onkeyup'=>"getgross_sal()"));
                                             ?> 
                                             <!-- <input class="form-control"> -->
                                             <!-- <p class="help-block">Example block-level help text here.</p> -->
@@ -104,7 +107,7 @@
                                   </fieldset>
                                   <div class="form-group">
                                       <label class="control-label">GROSS Salary<span  style="color:red;">*</span></label>
-                                      <?php echo $this->Form->input('emp_gross_sal',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required','placeholder'=>'Basic+HRA+Conveyance+Communication+Special','readonly'));
+                                      <?php echo $this->Form->input('emp_gross_sal',array('type' =>'text','class'=>'form-control validate','div'=>false,'label'=>false,'placeholder'=>'Basic+HRA+Conveyance+Communication+Special','readonly'));
                                       ?> 
                                       <!-- <input class="form-control"> -->
                                       <!-- <p class="help-block">Example block-level help text here.</p> -->
@@ -151,7 +154,7 @@
                                   </div>
                                   <div class="form-group">
                                       <label class="control-label">CTC<span  style="color:red;">*</span></label>
-                                      <?php echo $this->Form->input('emp_ctc',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'required'=>'required','placeholder'=>'Gross+PF+ESIC','readonly'));
+                                      <?php echo $this->Form->input('emp_ctc',array('type' =>'text','class'=>'form-control validate','div'=>false,'label'=>false,'placeholder'=>'Gross+PF+ESIC','readonly'));
                                       ?> 
                                       <!-- <input class="form-control"> -->
                                       <!-- <p class="help-block">Example block-level help text here.</p> -->
@@ -207,14 +210,14 @@
                                 </fieldset>
                                 <div class="form-group">
                                       <label class="control-label">Take Home<span  style="color:red;">*</span></label>
-                                      <?php echo $this->Form->input('emp_takehome',array('type' =>'text','class'=>'form-control','div'=>false,'label'=>false,'placeholder' =>'Gross-employeePF-ESIC-PT-IT-Advance','readonly'));
+                                      <?php echo $this->Form->input('emp_takehome',array('type' =>'text','class'=>'form-control validate','div'=>false,'label'=>false,'placeholder' =>'Gross-employeePF-ESIC-PT-IT-Advance','readonly'));
                                       ?> 
                                       <!-- <input class="form-control"> -->
                                       <!-- <p class="help-block">Example block-level help text here.</p> -->
                                   </div>
                                 </div>
                                 
-                                <button type="submit" class="btn btn-primary" onclick='return confirm("Are you sure want to set this salary?")'>Submit</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
                                 <button type="reset" class="btn btn-success">Reset</button>
                                 </fieldset>
                                 </div>
@@ -396,7 +399,7 @@
   function loadempsbycat(str){
     if(str != ''){
       $.get("<?php echo SITE; ?>dashboard/loadempsbycat/"+str,function(data){
-        $("#SearchEmployeeId").html(data);
+        $("#employee_id").html(data);
       });
     }
   }
@@ -404,13 +407,13 @@
   function loadempsbydes(str){
     if(str != ''){
       $.get("<?php echo SITE; ?>dashboard/loadempsbydes/"+str,function(data){
-        $("#SearchEmployeeId").html(data);
+        $("#employee_id").html(data);
       });
     }
   }
 
   function loadempdata(){
-    var str=document.getElementById("SearchEmployeeId").value;
+    var str=document.getElementById("employee_id").value;
     if(str != ""){
       $.get("<?php echo SITE; ?>dashboard/loadempsdata/"+str,function(data){
         $(".employeedetail").html(data);
@@ -423,4 +426,85 @@
       $("#divloadempdata").html("");
     }
   }
+
+  function validateFrm(){
+         var errCnt = 0;
+
+        $('.validate').each(function(){
+            //alert((this).val());
+            if($(this).val() == ''){
+                $(this).removeClass('inputSuccess');
+                $(this).addClass('inputError');
+                errCnt++;
+            }else{
+                $(this).removeClass('inputError');
+                $(this).addClass('inputSuccess');
+            }    
+        });
+        //alert(errCnt);
+        if(errCnt == 0){
+            if (confirm("Are you sure want to set this salary?") == true) {
+                return true;
+            } else {
+                return false;
+            }
+            
+        }else{
+            return false;
+        }
+    }
 </script>
+<script type="text/javascript">
+var elements = $(document).find('select.form-control');
+for (var i = 0, l = elements.length; i < l; i++) {
+  var $select = $(elements[i]), $label = $select.parents('.form-group').find('label');
+  $select.select2({
+    allowClear: false,
+    placeholder: $select.data('placeholder'),
+    minimumResultsForSearch: 0,
+    theme: 'bootstrap',
+    width: '100%' // https://github.com/select2/select2/issues/3278
+  });
+  
+  // Trigger focus
+  $label.on('click', function (e) {
+    $(this).parents('.form-group').find('select').trigger('focus').select2('focus');
+  });
+  
+  // Trigger search
+  $select.on('keydown', function (e) {
+    var $select = $(this), $select2 = $select.data('select2'), $container = $select2.$container;
+    
+    // Unprintable keys
+    if (typeof e.which === 'undefined' || $.inArray(e.which, [0, 8, 9, 12, 16, 17, 18, 19, 20, 27, 33, 34, 35, 36, 37, 38, 39, 44, 45, 46, 91, 92, 93, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 123, 124, 144, 145, 224, 225, 57392, 63289]) >= 0) {
+      return true;
+    }
+
+    // Opened dropdown
+    if ($container.hasClass('select2-container--open')) {
+      return true;
+    }
+
+    $select.select2('open');
+
+    // Default search value
+    var $search = $select2.dropdown.$search || $select2.selection.$search, query = $.inArray(e.which, [13, 40, 108]) < 0 ? String.fromCharCode(e.which) : '';
+    if (query !== '') {
+      $search.val(query).trigger('keyup');
+    }
+  });
+
+  // Format, placeholder
+  $select.on('select2:open', function (e) {
+    var $select = $(this), $select2 = $select.data('select2'), $dropdown = $select2.dropdown.$dropdown || $select2.selection.$dropdown, $search = $select2.dropdown.$search || $select2.selection.$search, data = $select.select2('data');
+    
+    // Above dropdown
+    if ($dropdown.hasClass('select2-dropdown--above')) {
+      $dropdown.append($search.parents('.select2-search--dropdown').detach());
+    }
+
+    // Placeholder
+    $search.attr('placeholder', (data[0].text !== '' ? data[0].text : $select.data('placeholder')));
+  });
+}
+</script> 

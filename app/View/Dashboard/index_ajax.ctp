@@ -57,8 +57,8 @@ echo $this->Paginator->counter(array(
             <th>Take Home</th>
             <th>Year</th>
             <th>Month</th>
-            <th>Days Paid</th>
             <th>Leaves Availed</th>
+            <th>Leaves Approved</th>
             <th>Action By HR</th>
             <th>Action By Accounts</th>
             <th>Print Details</th>
@@ -97,22 +97,29 @@ echo $this->Paginator->counter(array(
 			<td><?php echo h($val['Salary']['emp_ctc'])?></td>	
             <td><?php echo h($val['Salary']['emp_takehome'])?></td> 
             <td><?php echo h($val['SalaryDetail']['year'])?></td> 
-            <td><?php echo h($val['SalaryDetail']['month'])?></td> 
             <td>
-                <?php 
-                if(isset($val['SalaryDetail']['days_paid']) && $val['SalaryDetail']['days_paid']!=''){
-                    echo $val['SalaryDetail']['days_paid'];
-                }else{
-                    echo $this->Form->input("SalaryDetail.".$rowCnt.".days_paid",array('type' =>'text','class'=>'form-control numeric days_paid_'.$val['Salary']['emp_id'],'div'=>false,'label'=>false,'required'=>'required'));
+            <?php 
+                if(isset($val['SalaryDetail']['month']) && $val['SalaryDetail']['month']!=''){
+                    $monthNum  = $val['SalaryDetail']['month'];
+                    echo $detailmonth = date("F",strtotime("01-".$monthNum."-2017"));
                 }
-            ?> 
+            ?>
             </td> 
             <td>
             <?php 
             if(isset($val['SalaryDetail']['leaves_availed']) && $val['SalaryDetail']['leaves_availed']!=''){
                     echo $val['SalaryDetail']['leaves_availed'];
                 }else{
-                    echo $this->Form->input("SalaryDetail.".$rowCnt.".leaves_availed",array('type' =>'text','class'=>'form-control numeric leaves_availed_'.$val['Salary']['emp_id'],'div'=>false,'label'=>false,'required'=>'required'));
+                    echo $this->Form->input("SalaryDetail.".$rowCnt.".leaves_availed",array('type' =>'text','class'=>'form-control numeric leaves_availed_'.$val['Salary']['emp_id'],'div'=>false,'label'=>false,'default'=>0));
+                }
+            ?> 
+            </td> 
+            <td>
+                <?php 
+                if(isset($val['SalaryDetail']['leaves_approved']) && $val['SalaryDetail']['leaves_approved']!=''){
+                    echo $val['SalaryDetail']['leaves_approved'];
+                }else{
+                    echo $this->Form->input("SalaryDetail.".$rowCnt.".leaves_approved",array('type' =>'text','class'=>'form-control numeric leaves_approved_'.$val['Salary']['emp_id'],'div'=>false,'label'=>false,'default'=>0));
                 }
             ?> 
             </td> 
@@ -168,6 +175,7 @@ echo $this->Paginator->counter(array(
             <?php   
                     echo $this->Form->input('year',array('type'=>'hidden','value'=> $year));
                     echo $this->Form->input('month',array('type'=>'hidden','value'=> $month));
+                    echo $this->Form->input('desg',array('type'=>'hidden','value'=> $desg));
                     if($this->Session->read('login_id') == 'accountadmin'){
                         echo $this->Form->end(array('label'=>'Release All','class'=>'btn btn-primary','div'=>false,'id'=>'releaseall','disabled' => 'disabled','onclick'=>'return confirm("Are you sure want to release this salary?")'));
                     }else{
